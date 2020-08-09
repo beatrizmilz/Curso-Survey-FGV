@@ -170,6 +170,9 @@ base_limpa <- base_survey_filtrada %>%  # Arrumar os levels dos fatores
         "Pós-graduação completa"
       )
     )
+  ) %>% 
+  mutate(
+    ouviu_falar_casos_graves = forcats::fct_relevel(ouviu_falar_casos_graves,  "Já ouvi falar", "Não ouvi falar")
   )
 ```
 
@@ -514,7 +517,7 @@ base_limpa %>%
 
 ```
 
-Referência - População: [IBGE](https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248), ano referência: 2015.
+Referência - População: [IBGE](https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248), PNAD de 2015.
 
 ---
 ## Resultados 
@@ -523,16 +526,31 @@ Referência - População: [IBGE](https://seriesestatisticas.ibge.gov.br/series.
 
 ```{r echo=FALSE}
 base_limpa %>% select(plataforma_info) %>%
-  mutate(plataforma_info = stringr::str_replace_all(plataforma_info, "Facebook, Instagram, Twitter", "Facebook-Instagram-Twitter")) %>% 
-  separate(plataforma_info, into = c("plataforma_1", "plataforma_2"), sep = ",", extra = "merge") %>%
-  pivot_longer(cols = c(plataforma_1, plataforma_2)) %>% 
-  select(-name) %>% 
-  group_by(value) %>% 
-  summarise(quantidade = n()) %>% 
-  filter(!is.na(value)) %>% 
-  mutate(porcentagem = round(100* quantidade/nrow(base_survey_filtrada), 2)) %>% 
-  arrange(-quantidade) %>% 
-  rename("Opção" = 1, "N Respostas" = 2, "Porcentagem (%)" = 3) %>% 
+  mutate(
+    plataforma_info = stringr::str_replace_all(
+      plataforma_info,
+      "Facebook, Instagram, Twitter",
+      "Facebook-Instagram-Twitter"
+    )
+  ) %>%
+  separate(
+    plataforma_info,
+    into = c("plataforma_1", "plataforma_2"),
+    sep = ",",
+    extra = "merge"
+  ) %>%
+  pivot_longer(cols = c(plataforma_1, plataforma_2)) %>%
+  select(-name) %>%
+  group_by(value) %>%
+  summarise(quantidade = n()) %>%
+  filter(!is.na(value)) %>%
+  mutate(porcentagem = round(100 * quantidade / nrow(base_survey_filtrada), 2)) %>%
+  arrange(-quantidade) %>%
+  rename(
+    "Opção" = 1,
+    "N Respostas" = 2,
+    "Porcentagem (%)" = 3
+  ) %>%
   knitr::kable()
 
 ```
@@ -596,18 +614,39 @@ base_limpa %>% select(instituicao_info) %>%
 
 
 
-
-
-
-
 ---
-
 ## Resultados 
 
-- Melhorar a paleta de cores, eixos, legendas
+- __Pergunta:__ Dentre as ocupações abaixo, quais você utiliza como fonte de informações sobre o coronavírus? (Escolha no máximo 3 alternativas)
 
-```{r grafico-informacao, out.width="63%", dpi=300}
-base_limpa %>%
+```{r echo=FALSE}
+
+
+base_limpa %>% select(ocupacoes_info) %>%
+  separate(
+    ocupacoes_info,
+    into = c("ocupacoes_info_1", "ocupacoes_info_2", "ocupacoes_info_3"),
+    sep = ",",
+    extra = "merge"
+  ) %>%
+  pivot_longer(cols = c(ocupacoes_info_1, ocupacoes_info_2, ocupacoes_info_3)) %>%
+  select(-name) %>%
+  group_by(value) %>%
+  summarise(quantidade = n()) %>%
+  filter(!is.na(value)) %>%
+  mutate(porcentagem = round(100 * quantidade / nrow(base_survey_filtrada), 2)) %>%
+  arrange(-quantidade) %>%
+  rename(
+    "Opção" = 1,
+    "N Respostas" = 2,
+    "Porcentagem (%)" = 3
+  ) %>%
+  knitr::kable()
+
+```
+
+```{r}
+base_ouviu_falar <- base_limpa %>%
   pivot_longer(
     cols = c(
       ouviu_falar_casos_graves,
@@ -619,25 +658,13 @@ base_limpa %>%
     names_to = "pergunta",
     values_to = "resposta"
   ) %>%
-  group_by(pergunta, resposta) %>%
-  summarise(contagem = n()) %>%
-  
-  ggplot() +
-  geom_col(aes(x = pergunta, y = contagem, fill = resposta), alpha = 0.8) +
-   scale_fill_viridis_d(option = "plasma", na.value = "black") +
- # scale_fill_hue(h = c(90, 180), na.value = "black")+
-  coord_flip() +
-  theme_bw()+
-  theme(legend.position="bottom")
+    mutate(
+    resposta = forcats::fct_relevel(resposta,  "Já ouvi falar", "Não ouvi falar")
+  )
 ```
----
 
-## Resultados
-
-- Melhorar a paleta de cores, eixos, legendas
-
-```{r grafico-opiniao, out.width="65%"}
-base_limpa %>%
+```{r}
+base_concorda <- base_limpa %>%
   pivot_longer(
     cols = c(
       concorda_casos_graves,
@@ -658,21 +685,231 @@ base_limpa %>%
       "Discordo parcialmente",
       "Discordo totalmente"
     )
-  ) %>%
-  group_by(pergunta, resposta) %>%
-  summarise(contagem = n()) %>%
-  
-  ggplot() +
-  geom_col(aes(x = pergunta, y = contagem, fill = resposta), alpha = 0.8) +
-     scale_fill_viridis_d(option = "plasma", na.value = "black") +
-  coord_flip() +
-  theme_bw()+
-  theme(legend.position="bottom") 
-  
+  )
 ```
 
 ---
-## Desafios/Aprendizados
+
+### Estar presente em aglomerações (em espaços abertos ou fechados) aumenta a chance de contágio por coronavírus.
+.pull-left[
+
+#### Já ouviu falar?
+
+```{r grafico_ouviu_falar_aglomeracao, dpi = 600}
+base_ouviu_falar %>%
+  filter(pergunta == "ouviu_falar_aglomeracao") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") +
+  coord_flip()
+```
+
+
+]
+
+.pull-right[
+
+#### Concorda?
+
+```{r grafico_concorda_aglomeracao, echo=FALSE, dpi = 600}
+base_concorda %>%
+  filter(pergunta == "concorda_aglomeracao") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") + 
+  coord_flip()
+```
+
+
+]
+
+---
+
+### O uso da máscara diminui o contágio por coronavírus.
+.pull-left[
+
+#### Já ouviu falar?
+
+```{r grafico_ouviu_falar_mascara, dpi = 600}
+base_ouviu_falar %>%
+  filter(pergunta == "ouviu_falar_mascara") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") +
+  coord_flip()
+```
+
+
+]
+
+.pull-right[
+
+#### Concorda?
+
+```{r grafico_concorda_mascara, echo=FALSE, dpi = 600}
+base_concorda %>%
+  filter(pergunta == "concorda_mascara") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") + 
+  coord_flip()
+```
+
+
+]
+
+
+
+
+---
+### Casos graves de coronavírus podem acontecer em crianças e adolescentes.
+
+
+.pull-left[
+
+#### Já ouviu falar?
+
+```{r grafico_ouviu_falar_casos_graves, dpi = 600}
+base_ouviu_falar %>%
+  filter(pergunta == "ouviu_falar_casos_graves") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") +
+  coord_flip()
+```
+
+
+]
+
+.pull-right[
+
+#### Concorda?
+
+```{r grafico_concorda_casos_graves, echo=FALSE, dpi = 600}
+base_concorda %>%
+  filter(pergunta == "concorda_casos_graves") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") + 
+  coord_flip()
+```
+
+
+]
+
+
+
+---
+
+
+
+### Até o dia 31 de julho, mais de 90 mil pessoas haviam morrido por coronavírus no Brasil.
+.pull-left[
+
+#### Já ouviu falar?
+
+```{r grafico_ouviu_falar_mortes, dpi = 600}
+base_ouviu_falar %>%
+  filter(pergunta == "ouviu_falar_mortes") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") +
+  coord_flip()
+```
+
+
+]
+
+.pull-right[
+
+#### Concorda?
+
+```{r grafico_concorda_casos_mortes, echo=FALSE, dpi = 600}
+base_concorda %>%
+  filter(pergunta == "concorda_mortes") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") + 
+  coord_flip()
+```
+
+
+]
+
+
+---
+
+### A hidroxicloroquina (ou cloroquina) é desaconselhada, ou seja, não é aconselhada no tratamento da Covid-19.
+.pull-left[
+
+#### Já ouviu falar?
+
+```{r grafico_ouviu_falar_cloroquina, dpi = 600}
+base_ouviu_falar %>%
+  filter(pergunta == "ouviu_falar_cloroquina") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") +
+  coord_flip()
+```
+
+
+]
+
+.pull-right[
+
+#### Concorda?
+
+```{r  grafico_concorda_cloroquina, echo=FALSE, dpi = 600}
+base_concorda %>%
+  filter(pergunta == "concorda_cloroquina") %>%
+  group_by(resposta) %>%
+  summarise(n = n()) %>%
+  ggplot() +
+  geom_col(aes(x = resposta, y = n), fill = "lightblue") +
+  theme_bw(base_size = 18) +
+  labs(y = "Número de respostas", x = "Opções de resposta") + 
+  coord_flip()
+```
+
+
+]
+
+
+
+
+
+
+
+---
+## Conclusões, Desafios e Aprendizados
 
 - **Pergunta sobre sexo:** utilizamos como referência o IBGE. Porém não foi inclusivo e não abrange todas as possibilidades.
 
