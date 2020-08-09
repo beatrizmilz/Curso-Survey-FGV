@@ -12,6 +12,7 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+knit: pagedown::chrome_print
 ---
 
 ```{r setup, include=FALSE}
@@ -31,6 +32,7 @@ library(kableExtra)
 library(RefManageR)
 library(readr)
 library(gtsummary)
+library(pagedown)
 ```
 
 
@@ -555,7 +557,7 @@ PrintBibliography(myBib)
 name: apendice1
 ## Apêndice 1
 
-**Grupos do Facebook onde foi feito a divulgação: ¹ .footnote[¹Clique no nome do grupo para ser redirecionado à sua página no Facebook.]**
+**Grupos do Facebook onde foi feito a divulgação: ¹** .footnote[¹Clique no nome do grupo para ser redirecionado à sua página no Facebook.]
 
 .pull-left[
 - [Politicas publicas UFABC](https://www.facebook.com/groups/PoliticasPublicasUFABC/?ref=bookmarks)
