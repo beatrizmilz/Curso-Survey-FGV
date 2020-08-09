@@ -34,6 +34,7 @@ library(readr)
 library(gtsummary)
 library(pagedown)
 library(wordcloud)
+library(readxl)
 ```
 
 
@@ -158,7 +159,7 @@ base_limpa <- base_survey_filtrada %>%  # Arrumar os levels dos fatores
     #escolaridade = forcats::as_factor(escolaridade),
     escolaridade = forcats::fct_relevel(
       escolaridade,
-      levels = c(
+      levels = c("Sem instrução",
         "Ensino fundamental incompleto",
         "Ensino fundamental completo",
         "Ensino médio incompleto",
@@ -257,9 +258,6 @@ Os dados foram exportados do Qualtrics como arquivo `.csv`
 - Número de respostas depois da organização e limpeza da base de dados: 
 **`r nrow(base_survey_filtrada)`  respostas**
 
----
-
-### Perfil - Sexo
 ```{r include=FALSE}
 
 porcentagem <- function(data, var){
@@ -272,61 +270,66 @@ porcentagem <- function(data, var){
 }
 
 ```
-.pull-left[
 
-#### Amostra
+---
+class: middle 
+
+### Perfil - Sexo
 
 ```{r echo=FALSE}
+ibge_sexo <- read_excel(
+  "dados/tabelasIBGEAmostra.xlsx",
+  sheet = "Sexo",
+  col_types = c("text",
+                "skip", "numeric")
+) %>% janitor::clean_names()
+
+
 porcentagem(base_limpa, sexo) %>%
-    rename("Sexo" = 1) %>%   
+  left_join(ibge_sexo) %>%
+  rename("Sexo" = 1,
+         "Amostra (%)" = 2,
+         "População (%)" = 3) %>%
   knitr::kable()
 
 ```
 
-]
-
-.pull-right[
-
-#### População Brasileira 
-
-```{r echo=FALSE, out.width="100%", include=TRUE}
-knitr::include_graphics("img/graficos_ibge/jovens_populacao_3_pop_sexo_pizza.png")
-```
 
 
-Fonte: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18320-quantidade-de-homens-e-mulheres.html)
-]
+
+Referência - População: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18320-quantidade-de-homens-e-mulheres.html)
 
 
 
 ---
+class: middle 
 
 ### Perfil - Região 
 
-.pull-left[
-
-#### Amostra
-
 ```{r echo=FALSE}
+
+ibge_regiao <- read_excel(
+  "dados/tabelasIBGEAmostra.xlsx",
+  sheet = "Regiao",
+  col_types = c("text",
+                "skip", "numeric")
+) %>% janitor::clean_names()
+
 porcentagem(base_limpa, regiao_br) %>%
-  rename("Região" = 1) %>%
+  full_join(ibge_regiao, by = c("regiao_br" = "regiao")) %>%
+  mutate(ibge_2020 = replace_na(ibge_2020, 0)) %>% 
+  rename("Região" = 1,
+         "Amostra (%)" = 2,
+         "População (%)" = 3) %>%
   knitr::kable()
 
 ```
 
-]
-
-.pull-right[
-
-#### População Brasileira 
-
-```{r echo=FALSE, out.width="100%", include=TRUE}
-knitr::include_graphics("img/graficos_ibge/regiao.JPG")
-```
 
 
-Fonte: [IBGE, 2020](https://biblioteca.ibge.gov.br/visualizacao/livros/liv101707_informativo.pdf)
-]
+
+
+Referência - População: [IBGE, 2020](https://biblioteca.ibge.gov.br/visualizacao/livros/liv101707_informativo.pdf)
 
 
 ---
@@ -377,81 +380,140 @@ Fonte: [IBGE, 2020](https://biblioteca.ibge.gov.br/visualizacao/livros/liv101707
 
 
 ---
+class: middle 
 
 ### Perfil - Rural ou urbano
 
-.pull-left[
-
-#### Amostra
-
 ```{r}
+
+ibge_area <- read_excel(
+  "dados/tabelasIBGEAmostra.xlsx",
+    sheet = "RuralUrbana",
+  col_types = c("text",
+                "skip", "numeric")
+) %>% janitor::clean_names()
+
 porcentagem(base_limpa, rural_ou_urbano) %>%
-  rename("Área" = 1) %>%
+  full_join(ibge_area, by = c("rural_ou_urbano" = "area")) %>%
+  mutate(`Porcentagem (%)` = replace_na(`Porcentagem (%)`, 0)) %>% 
+ 
+  rename("Região" = 1,
+         "Amostra (%)" = 2,
+         "População (%)" = 3) %>%
   knitr::kable()
 
-```
 
-]
-
-.pull-right[
-
-#### População Brasileira 
-
-```{r echo=FALSE, out.width="100%", include=TRUE}
-knitr::include_graphics("img/graficos_ibge/2018_03_26_jovens-populacao-urbana.jpg")
 ```
 
 
-Fonte: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18313-populacao-rural-e-urbana.html)
-]
+
+Referência - População: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18313-populacao-rural-e-urbana.html) - Dados de 2015
 
 
 ---
+class: middle 
 
 ### Perfil - Escolaridade
 
-
-
-#### Amostra
-
 ```{r}
+ibge_escolaridade <- read_excel(
+  "dados/tabelasIBGEAmostra.xlsx",
+  sheet = "Escolaridade",
+  col_types = c("text",
+                "skip", "numeric")
+) %>% janitor::clean_names()
+
 porcentagem(base_limpa, escolaridade) %>%
-  rename("Escolaridade" = 1) %>%
+  full_join(ibge_escolaridade) %>%
+  mutate(`Porcentagem (%)` = replace_na(`Porcentagem (%)`, 0)) %>% 
+  mutate(escolaridade = forcats::fct_relevel(
+    escolaridade,
+    levels = c(
+      "Sem instrução",
+      "Ensino fundamental incompleto",
+      "Ensino fundamental completo",
+      "Ensino médio incompleto",
+      "Ensino médio completo",
+      "Ensino superior incompleto",
+      "Ensino superior completo",
+      "Pós-graduação incompleta",
+      "Pós-graduação completa"
+    ))) %>%
+  arrange(escolaridade) %>% 
+  rename("Região" = 1,
+         "Amostra (%)" = 2,
+         "População (%)" = 3) %>%
   knitr::kable()
 
 ```
 
----
+Referência - População: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18317-educacao.html)
 
-### Perfil  - Escolaridade
-
-#### População Brasileira 
-
-```{r echo=FALSE, out.width="80%", include=TRUE}
-knitr::include_graphics("img/graficos_ibge/jovens_educacao_nivel-instrucao.png")
-```
-
-
-Fonte: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18317-educacao.html)
 
 
 ---
 ### Perfil - Faixa de Renda 
 
 ```{r}
-porcentagem(base_limpa, faixa_renda)  %>%
-  rename("Faixa de Renda da Amostra" = 1) %>%
+ibge_renda <- read_excel(
+  "dados/tabelasIBGEAmostra.xlsx",
+  sheet = "FaixaRenda",
+  col_types = c("text",
+                "skip", "numeric")
+) %>% janitor::clean_names()
+
+
+
+base_limpa %>%
+  mutate(
+    faixa_renda = as.character(faixa_renda),
+    faixa_renda = case_when(
+      faixa_renda == "Até R$ 1045,00 (até 1 Salário Mínimo)" ~ "Até 1 Salário Mínimo",
+      faixa_renda == "De R$ 1045 a R$ 2.090 (+ de 1 até 2 Salários Mínimos)" ~ "1 até 2 Salários Mínimos",
+      faixa_renda == "De R$ 2.090 a R$ 3.135 (+ de 2 até 3 Salários Mínimos)" ~ "2 até 3 Salários Mínimos",
+      faixa_renda == "De R$3.135 a R$5.225 (+ de 3 até 5 Salários Mínimos)" ~ "3 até 5 Salários Mínimos",
+      faixa_renda == "De R$5.225 a R$10.450 (+ de 5 até 10 Salários Mínimos)" ~ "5 até 10 Salários Mínimos",
+      faixa_renda == "De R$10.450 a R$15.675 (+ de 10 até 15 Salários Mínimos)" ~ "10 até 20 Salários Mínimos",
+      faixa_renda == "De R$15.675 a R$20.900 (+ de 15 até 20 Salários Mínimos)" ~ "10 até 20 Salários Mínimos",
+      faixa_renda == "Mais de R$20.900,00 (+ de 20 Salários Mínimos)" ~ "Mais de 20 Salários Mínimos",
+      
+      TRUE ~ faixa_renda
+    )
+  ) %>%
+  group_by(faixa_renda) %>%
+  summarise(quantidade = n()) %>%
+  mutate(porcentagem = round(100 * quantidade / sum(quantidade), 1)) %>%
+  select(-quantidade) %>%
+  rename("Porcentagem (%)" = 2) %>%
+  full_join(ibge_renda, by = c("faixa_renda" = "faixa_de_renda")) %>%
+  mutate(`Porcentagem (%)` = replace_na(`Porcentagem (%)`, 0)) %>%
+  ungroup() %>%
+  mutate(
+    faixa_renda = forcats::fct_relevel(
+      faixa_renda,
+      "Sem rendimento/Sem declaração",
+      "Até 1 Salário Mínimo",
+      "1 até 2 Salários Mínimos",
+      "2 até 3 Salários Mínimos",
+      "3 até 5 Salários Mínimos",
+      "5 até 10 Salários Mínimos",
+      "10 até 20 Salários Mínimos",
+      "Mais de 20 Salários Mínimos"
+    )
+  ) %>%
+  arrange(faixa_renda) %>%
+  rename(
+    "Faixa de renda" = 1,
+    "Amostra (%)" = 2,
+    "População (%)" = 3
+  ) %>%
+  
   knitr::kable()
 
 ```
 
----
-### Perfil - Faixa de Renda 
+Referência - População: ...
 
-#### População Brasileira
-
-
-- Encontrar uma imagem boa!
 ---
 ## Resultados 
 
@@ -468,6 +530,7 @@ base_limpa %>% select(plataforma_info) %>%
   filter(!is.na(value)) %>% 
   mutate(porcentagem = round(100* quantidade/nrow(base_survey_filtrada), 2)) %>% 
   arrange(-quantidade) %>% 
+  rename("Opção" = 1, "N Respostas" = 2, "Porcentagem (%)" = 3) %>% 
   knitr::kable()
 
 ```
@@ -487,6 +550,47 @@ base_limpa %>% select(plataforma_info_outros) %>%
 
 
 
+---
+## Resultados 
+
+- __Pergunta:__ Dentre as instituições abaixo, quais você utiliza como fonte de informações sobre o coronavírus? (Escolha 2 alternativas) 
+
+```{r echo=FALSE}
+
+
+base_limpa %>% select(instituicao_info) %>%
+  mutate(
+    instituicao_info = stringr::str_replace_all(
+      instituicao_info,
+      "universidades públicas, faculdades",
+      "universidades públicas - faculdades"
+    ), 
+  instituicao_info = stringr::str_replace_all(
+    instituicao_info,
+    "universidades privadas, faculdades privadas",
+    "universidades privadas - faculdades privadas"
+  )) %>%
+  separate(
+    instituicao_info,
+    into = c("instituicao_1", "instituicao_2"),
+    sep = ",",
+    extra = "merge"
+  ) %>%
+  pivot_longer(cols = c(instituicao_1, instituicao_2)) %>%
+  select(-name) %>%
+  group_by(value) %>%
+  summarise(quantidade = n()) %>%
+  filter(!is.na(value)) %>%
+  mutate(porcentagem = round(100 * quantidade / nrow(base_survey_filtrada), 2)) %>%
+  arrange(-quantidade) %>%
+  rename(
+    "Opção" = 1,
+    "N Respostas" = 2,
+    "Porcentagem (%)" = 3
+  ) %>%
+  knitr::kable()
+
+```
 
 
 
