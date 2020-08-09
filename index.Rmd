@@ -452,6 +452,8 @@ Referência - População: [IBGE, 2019](https://educa.ibge.gov.br/jovens/conheca
 
 
 ---
+class: middle 
+
 ### Perfil - Faixa de Renda 
 
 ```{r}
@@ -512,7 +514,7 @@ base_limpa %>%
 
 ```
 
-Referência - População: ...
+Referência - População: [IBGE](https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248), ano referência: 2015.
 
 ---
 ## Resultados 
