@@ -33,6 +33,7 @@ library(RefManageR)
 library(readr)
 library(gtsummary)
 library(pagedown)
+library(wordcloud)
 ```
 
 
@@ -452,10 +453,38 @@ porcentagem(base_limpa, faixa_renda)  %>%
 
 - Encontrar uma imagem boa!
 ---
-
 ## Resultados 
 
-- ideias de gráficos: cruzar informações
+- __Pergunta:__ Quais destas plataformas você utiliza para se informar sobre o coronavírus? (Escolha no máximo 2 alternativas)
+
+```{r echo=FALSE}
+base_limpa %>% select(plataforma_info) %>%
+  mutate(plataforma_info = stringr::str_replace_all(plataforma_info, "Facebook, Instagram, Twitter", "Facebook-Instagram-Twitter")) %>% 
+  separate(plataforma_info, into = c("plataforma_1", "plataforma_2"), sep = ",", extra = "merge") %>%
+  pivot_longer(cols = c(plataforma_1, plataforma_2)) %>% 
+  select(-name) %>% 
+  group_by(value) %>% 
+  summarise(quantidade = n()) %>% 
+  filter(!is.na(value)) %>% 
+  mutate(porcentagem = round(100* quantidade/nrow(base_survey_filtrada), 2)) %>% 
+  arrange(-quantidade) %>% 
+  knitr::kable()
+
+```
+
+---
+## Resultados 
+
+- __Pergunta:__ Quais destas plataformas você utiliza para se informar sobre o coronavírus? (Escolha no máximo 2 alternativas)
+
+- Outros:
+
+```{r wordcloud-fonte-info, echo=FALSE, out.width="50%"}
+base_limpa %>% select(plataforma_info_outros) %>%
+  pull() %>% wordcloud(scale = c(6, 2))
+```
+
+
 
 
 
@@ -542,6 +571,7 @@ base_limpa %>%
 - **Pergunta sobre sexo:** utilizamos como referência o IBGE. Porém não foi inclusivo e não abrange todas as possibilidades.
 
 - Dificuldade em obter uma amostra representativa da população brasileira.
+
 
 
 ---
