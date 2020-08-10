@@ -284,7 +284,7 @@ porcentagem <- function(data, var){
 ---
 class: inverse, middle, center
  
-## Perfil das pessoas respondentes
+## Perfil das pessoas respondentes comparadas com a população
 
 
 ---
@@ -532,6 +532,26 @@ base_limpa %>%
 
 Referência - População: [IBGE](https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248), PNAD de 2015.
 
+---
+class: middle
+## Amostra
+
+- As vantagens oferecidas por surveys online, via Facebook, MTurk ou Qualtrics, devem ser consideradas a partir das deficiências desses métodos em comparação com métodos tradicionais, a partir de amostras probabilísticas, coletadas face a face ou por telefone (Samuels & Zucco, 2013 e Boas et. al, 2020). 
+
+- Uma das possíveis deficiências e a falta de representatividade da amostra.
+
+---
+class: middle
+
+## Amostra
+
+- Podemos aferir a representatividade de nossa amostra comparando suas estatísticas demográficas com aquelas produzidas por censos ou amostras probabilísticas. Com essa comparação percebemos que nossa amostra não é representativa da população brasileira em várias dimensões. No caso a amostra obtida sobrerrepresenta:
+    - mulheres;
+    - pessoas com maior escolaridade (superior completo ou incompleto);
+    - moradores da região sudeste;
+    - pessoas com maior renda;
+    - grupo etário de 18 a 34 anos.
+    
 ---
 class: inverse, middle, center
 
@@ -940,6 +960,8 @@ class: middle
 
 - Dificuldade em obter uma amostra representativa da população brasileira: a amostra obtida sobrerepresenta pessoas com maior escolaridade e faixa de renda.
 
+- Uma maneira sugerida por David & Zucco (2013: 12-14) para correção de sobre- e subrrepresentações em amostras pelo Facebook é a realização de uma segunda rodada do survey, dessa vez usando os mecanismos de impulsionamento da rede social voltados para as parcelas subrrepresentadas.
+
 <!-- - Apesar de termos uma amostra que sobrerepresenta cidadãos mais escolarizados, a proporção de respondentes que relatou não ter ouvido falar das afirmações factuais apresentadas em forma de pergunta em nosso questionário não é inteiramente desprezível. Duas afirmações se destacam neste sentido: a relativa aos efeitos potencialmente nocivos do covid-19 em crianças e adolescentes e ao número de mortos oficialmente relatado na semana da pesquisa. -->
 
 <!-- - Se a questão do efeito em crianças e adolescentes se mostra mais voltada para um debate de especialistas, quanto ao número de mortos a surpresa é maior, devido a constante e diária exposição do mesmo nas atualizações diárias em jornais televisivos e nas redes sociais. -->
@@ -958,6 +980,8 @@ class: middle
 ```{r refs, echo=FALSE, results="asis", include=TRUE}
 PrintBibliography(myBib)
 ```
+
+Boas, T., Christenson, D., & Glick, D. (2020). "Recruiting large online samples in the United States and India: Facebook, Mechanical Turk, and Qualtrics". In Political Science Research and Methods, 8(2), 232-250. doi:10.1017/psrm.2018.28.
 
 IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Acesso à Internet e à televisão e posse de telefone móvel celular para uso pessoal 2018. Coleção Ibgeana. Rio de Janeiro: IBGE, 2020. Disponível em: <https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=2101705>. Acesso em: 9 ago. 2020.
 
@@ -981,6 +1005,12 @@ IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Características gerais dos domic
 IBGE EDUCA JOVENS. População rural e urbana. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18313-populacao-rural-e-urbana.html>. Acesso em: 9 ago. 2020.
 
 IBGE EDUCA JOVENS. Educação. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18317-educacao.html>. Acesso em: 9 ago. 2020.
+
+
+
+
+
+Samuels, D. & Zucco, C. (2013). "Using Facebook as a Subject Recruitment Tool for Survey-Experimental Research. Working Paper". In Social Science Research Network, Disponível em: https://ssrn.com/abstract=2101458, Acesso em 9 ago. 2020.
 
 ---
 name: apendice1
