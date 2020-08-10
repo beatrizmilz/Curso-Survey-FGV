@@ -179,7 +179,9 @@ base_limpa <- base_survey_filtrada %>%  # Arrumar os levels dos fatores
   )
 ```
 
+
 ## Nota Metodológica
+
 
 
 ---
