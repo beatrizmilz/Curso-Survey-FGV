@@ -904,6 +904,11 @@ base_concorda %>%
 
 
 
+```{r}
+#  descr::CrossTable(base_limpa$ouviu_falar_cloroquina, base_limpa$concorda_cloroquina)
+# 
+```
+
 
 
 
@@ -913,8 +918,17 @@ base_concorda %>%
 
 - **Pergunta sobre sexo:** utilizamos como referência o IBGE. Porém não foi inclusivo e não abrange todas as possibilidades.
 
-- Dificuldade em obter uma amostra representativa da população brasileira.
+- Dificuldade em obter uma amostra representativa da população brasileira: a amostra obtida sobrerepresenta pessoas com maior escolaridade e faixa de renda.
 
+<!-- - Apesar de termos uma amostra que sobrerepresenta cidadãos mais escolarizados, a proporção de respondentes que relatou não ter ouvido falar das afirmações factuais apresentadas em forma de pergunta em nosso questionário não é inteiramente desprezível. Duas afirmações se destacam neste sentido: a relativa aos efeitos potencialmente nocivos do covid-19 em crianças e adolescentes e ao número de mortos oficialmente relatado na semana da pesquisa. -->
+
+<!-- - Se a questão do efeito em crianças e adolescentes se mostra mais voltada para um debate de especialistas, quanto ao número de mortos a surpresa é maior, devido a constante e diária exposição do mesmo nas atualizações diárias em jornais televisivos e nas redes sociais. -->
+
+<!-- - De modo geral, constata-se que os respondentes em sua grande maioria ouviram falar acerca destes fatos. Os graus de concordância com as afirmativas, apesar de seguir este padrão, revela também discordâncias não desprezíveis. O tópico com maior consenso é relativo as aglomerações e o papel destas em aumentar as chances de contágio. O uso de máscaras vem em seguida, com números similares. As diferenças emergem nas perguntas relativas ao número de mortos na semana de referência e aos efeitos nocivos em crianças e adolescentes: em ambas aparecem nas respostas a opção "não concordo, nem discordo". A questão com respostas mais variadas, apesar da maioria ainda concordar com a afirmativa factual estimulada na pergunta, é relativa a eficiência da hidroxicloroquina. Nesta pergunta temos os únicos percentuais não inteiramente desprezíveis de respostas neutras e discordantes (i.e., atestando que o respondente provavelmente acredita no potencial de cura deste remédio no tratamento da covid-19). -->
+
+<!-- - Possível explicação da questão da hidroxicloroquina: não compreensão da redação questão, para além da resposta intencional (i.e., respondente acredita nesta via de tratamento) -->
+
+<!-- - Possível explicação do número de mortes: respondente pode considerar que o número seja maior ou menor que o real, por motivos distintos. A pergunta não permite ao respondente explicar sua justificativa. -->
 
 
 ---
@@ -925,6 +939,21 @@ base_concorda %>%
 PrintBibliography(myBib)
 ```
 
+IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Acesso à Internet e à televisão e posse de telefone móvel celular para uso pessoal 2018. Coleção Ibgeana. Rio de Janeiro: IBGE, 2020. Disponível em: <https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=2101705>. Acesso em: 9 ago. 2020.
+
+IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Características gerais dos domicílios e dos moradores: 2019. Coleção Ibgeana. Rio de Janeiro: IBGE, 2020. Disponível em: <https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=2101707>. Acesso em: 9 ago. 2020.
+
+---
+## Referências
+
+
+ IBGE EDUCA JOVENS. Quantidade de homens e mulheres. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18320-quantidade-de-homens-e-mulheres.html>. Acesso em: 9 ago. 2020.
+
+ IBGE. Rendimento médio mensal domiciliar, por classes de Salário Mínimo | 2001-2009/2011-2015. Disponível em: <https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248>. Acesso em: 9 ago. 2020.
+
+IBGE EDUCA JOVENS. População rural e urbana. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18313-populacao-rural-e-urbana.html>. Acesso em: 9 ago. 2020.
+
+IBGE EDUCA JOVENS. Educação. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18317-educacao.html>. Acesso em: 9 ago. 2020.
 
 ---
 name: apendice1
