@@ -1,0 +1,27 @@
+---
+title: "Questionário"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, out.width = "100%", fig.align = "center")
+```
+
+```{r echo=FALSE}
+knitr::include_graphics(
+  c(
+    "img/questionario/1.jpeg",
+    "img/questionario/2.jpeg",
+    "img/questionario/3.jpeg",
+    "img/questionario/4.jpeg",
+    "img/questionario/5.jpeg",
+    "img/questionario/6.jpeg",
+    "img/questionario/7.jpeg",
+    "img/questionario/8.jpeg",
+    "img/questionario/9.jpeg",
+    "img/questionario/10.jpeg",
+    "img/questionario/11.jpeg"
+  )
+)
+```
+

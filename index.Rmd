@@ -1078,4 +1078,4 @@ name: apendice2
 
 ## Apêndice 2 - Questionário
 
-- Adicionar perguntas
+- Disponível [neste link](https://beatrizmilz.github.io/Curso-Survey-FGV/questionario.html).
