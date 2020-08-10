@@ -1,6 +1,7 @@
 ---
 title: "Questionário"
 output: html_document
+knit: pagedown::chrome_print
 ---
 
 ```{r setup, include=FALSE}
