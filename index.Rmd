@@ -17,6 +17,8 @@ knit: pagedown::chrome_print
 class: inverse, middle, center
 
 
+## Nota Metodológica
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -178,11 +180,6 @@ base_limpa <- base_survey_filtrada %>%  # Arrumar os levels dos fatores
     ouviu_falar_casos_graves = forcats::fct_relevel(ouviu_falar_casos_graves,  "Já ouvi falar", "Não ouvi falar")
   )
 ```
-
-
-## Nota Metodológica
-
-
 
 ---
 
@@ -974,6 +971,12 @@ IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Características gerais dos domic
  IBGE EDUCA JOVENS. Quantidade de homens e mulheres. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18320-quantidade-de-homens-e-mulheres.html>. Acesso em: 9 ago. 2020.
 
  IBGE. Rendimento médio mensal domiciliar, por classes de Salário Mínimo | 2001-2009/2011-2015. Disponível em: <https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248>. Acesso em: 9 ago. 2020.
+
+---
+
+## Referências
+
+
 
 IBGE EDUCA JOVENS. População rural e urbana. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18313-populacao-rural-e-urbana.html>. Acesso em: 9 ago. 2020.
 
