@@ -14,10 +14,15 @@ output:
       countIncrementalSlides: false
 knit: pagedown::chrome_print
 ---
-class: inverse, middle, center
+class: middle
 
+## Objetivos
 
-## Nota Metodológica
+#### - Auferir o acesso dos respondentes a algumas das principais informações relativas à pandemia do novo coronavírus (Covid-19).
+
+#### - Auferir o grau de concordância dos respondentes acerca dessas mesmas informações.
+
+#### - Verificar a representatividade de uma amostra colhida não probabilisticamente em redes sociais.
 
 
 ```{r setup, include=FALSE}
@@ -180,6 +185,11 @@ base_limpa <- base_survey_filtrada %>%  # Arrumar os levels dos fatores
     ouviu_falar_casos_graves = forcats::fct_relevel(ouviu_falar_casos_graves,  "Já ouvi falar", "Não ouvi falar")
   )
 ```
+---
+class: inverse, middle, center
+
+
+## Nota Metodológica
 
 ---
 
@@ -538,7 +548,7 @@ class: middle
 
 - As vantagens oferecidas por surveys online, via Facebook, MTurk ou Qualtrics, devem ser consideradas a partir das deficiências desses métodos em comparação com métodos tradicionais, a partir de amostras probabilísticas, coletadas face a face ou por telefone (Samuels & Zucco, 2013 e Boas et. al, 2020). 
 
-- Uma das possíveis deficiências e a falta de representatividade da amostra.
+- Uma das possíveis deficiências é a falta de representatividade da amostra.
 
 ---
 class: middle
@@ -1062,3 +1072,10 @@ name: apendice1
  <input type="button" class="btn btn-primary" value="Voltar à página anterior!" onclick="history.back()">
 </form>
 </center>
+
+---
+name: apendice2
+
+## Apêndice 2 - Questionário
+
+- Adicionar perguntas
