@@ -1079,3 +1079,18 @@ name: apendice2
 ## Apêndice 2 - Questionário
 
 - Disponível [neste link](https://beatrizmilz.github.io/Curso-Survey-FGV/questionario.html).
+
+
+---
+class: inverse, middle, center
+
+
+# Obrigado/Obrigada!
+
+#### Apresentação criada com o pacote [xaringan](https://github.com/yihui/xaringan).
+
+
+### Todos os códigos estão disponíveis no [GitHub](https://github.com/beatrizmilz/Curso-Survey-FGV).
+
+
+O arquivo da apresentação é o [`index.Rmd`](https://beatrizmilz.github.io/Curso-Survey-FGV/index.Rmd) !
