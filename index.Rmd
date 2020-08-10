@@ -176,6 +176,13 @@ base_limpa <- base_survey_filtrada %>%  # Arrumar os levels dos fatores
   )
 ```
 
+---
+class: inverse, middle, center
+
+## Nota Metodológica
+
+---
+
 
 ## Nota metodológica
 
@@ -273,6 +280,12 @@ porcentagem <- function(data, var){
 }
 
 ```
+
+---
+class: inverse, middle, center
+ 
+## Perfil das pessoas respondentes
+
 
 ---
 class: middle 
@@ -520,7 +533,12 @@ base_limpa %>%
 Referência - População: [IBGE](https://seriesestatisticas.ibge.gov.br/series.aspx?no=6&op=0&vcodigo=PD248), PNAD de 2015.
 
 ---
-## Resultados 
+class: inverse, middle, center
+
+## Resultados obtidos
+
+
+---
 
 - __Pergunta:__ Quais destas plataformas você utiliza para se informar sobre o coronavírus? (Escolha no máximo 2 alternativas)
 
@@ -556,7 +574,7 @@ base_limpa %>% select(plataforma_info) %>%
 ```
 
 ---
-## Resultados 
+
 
 - __Pergunta:__ Quais destas plataformas você utiliza para se informar sobre o coronavírus? (Escolha no máximo 2 alternativas)
 
@@ -571,7 +589,7 @@ base_limpa %>% select(plataforma_info_outros) %>%
 
 
 ---
-## Resultados 
+
 
 - __Pergunta:__ Dentre as instituições abaixo, quais você utiliza como fonte de informações sobre o coronavírus? (Escolha 2 alternativas) 
 
@@ -615,7 +633,7 @@ base_limpa %>% select(instituicao_info) %>%
 
 
 ---
-## Resultados 
+
 
 - __Pergunta:__ Dentre as ocupações abaixo, quais você utiliza como fonte de informações sobre o coronavírus? (Escolha no máximo 3 alternativas)
 
@@ -914,6 +932,8 @@ base_concorda %>%
 
 
 ---
+class: middle
+
 ## Conclusões, Desafios e Aprendizados
 
 - **Pergunta sobre sexo:** utilizamos como referência o IBGE. Porém não foi inclusivo e não abrange todas as possibilidades.
@@ -941,11 +961,12 @@ PrintBibliography(myBib)
 
 IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Acesso à Internet e à televisão e posse de telefone móvel celular para uso pessoal 2018. Coleção Ibgeana. Rio de Janeiro: IBGE, 2020. Disponível em: <https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=2101705>. Acesso em: 9 ago. 2020.
 
-IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Características gerais dos domicílios e dos moradores: 2019. Coleção Ibgeana. Rio de Janeiro: IBGE, 2020. Disponível em: <https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=2101707>. Acesso em: 9 ago. 2020.
+
 
 ---
 ## Referências
 
+IBGE - COORDENAÇÃO DE TRABALHO E RENDIMENTO. Características gerais dos domicílios e dos moradores: 2019. Coleção Ibgeana. Rio de Janeiro: IBGE, 2020. Disponível em: <https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=2101707>. Acesso em: 9 ago. 2020.
 
  IBGE EDUCA JOVENS. Quantidade de homens e mulheres. Disponível em: <https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18320-quantidade-de-homens-e-mulheres.html>. Acesso em: 9 ago. 2020.
 
